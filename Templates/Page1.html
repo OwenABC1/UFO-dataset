@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% set active_page = "page1" %}
+
+{% block title %}Page 1{% endblock %}
+
+{% block content %}
+    <!--page content-->
+    <h1>Most common data per year</h1>
+	<h2>Select A year</h2>
+	
+	<form action="/showStatsByYear">
+          <select name="Year"> 
+            {{ Year_options }}
+          </select>
+          <br><br>
+          <input type="submit" value="Submit">
+    </form>
+	
+	<div id="funFact">
+            <p>{{ funFact }}</p>
+        </div>
+		<div id="funFact">
+			<p>{{ funFact2 }}</p>
+	</div>
+	
+{% endblock %}

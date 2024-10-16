@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% set active_page = "home" %}
+
+{% block title %}Page 1{% endblock %}
+
+{% block content %}
+
+<h1>About The Data</h1>
+
+<p>
+The data used on this website is from the <a href="https://corgis-edu.github.io/corgis/json/ufo_sightings/">CORGIS Dataset Project</a>. <br>The data contains statistics about UFO sightings from 2018 to 2021. 
+<br><br>
+The Dataset includes statistics on the duration and location of each encounter, as well as a very brief description of the UFO itself. <br> For example a ufo encounter could have the following data:
+<br><br>
+	-Country: US <br>
+	-State: AK<br>
+	-City: Anchor Point<br>
+	-Duration: 300 Seconds<br>
+	-UFO shape: Disk<br>
+	-Description: Large UFO over Mt. ILIMANA Alaska. <br>((NUFORC Note: Possible   contrail behind a high-altitude jet?? PD))
+
+</p>
+
+{% endblock %}
