@@ -9,7 +9,7 @@
     <h1>Most common data per year</h1>
 	<h2>Select A year</h2>
 	
-	<form action="/showStatsByYear">
+	<form action="/p1">
           <select name="Year"> 
             {{ Year_options }}
           </select>
@@ -18,10 +18,13 @@
     </form>
 	
 	<div id="funFact">
-            <p>{{ funFact }}</p>
+            <p>{{ FunFact }}</p>
         </div>
 		<div id="funFact">
-			<p>{{ funFact2 }}</p>
+			<p>{{ FunFact2 }}</p>
+	</div>
+	<div id="funFact">
+		<p>{{ FunFact3 }}</p>
 	</div>
 	
 {% endblock %}
