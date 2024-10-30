@@ -15,11 +15,65 @@ def render_main():
 
 @app.route("/p2")
 def render_page2():
-    return render_template('page2.html')
+    shapes = get_shape_options()
+    if 'Shape' in request.args:
+        Shape = request.args['Shape']
+        encounterLength = Shapelongest_encounter(Shape)
+       # MostCommonShape = GetMostCommonShape(Shape)
+      #  MostCommonLoc = GetMostCommonLoc(Shape)
+        fact = "The longest encounter with a " + (Shape) + " was " + str(encounterLength) + " seconds."
+       # fact2 = "The most common type of UFO was a " + str(MostCommonShape) + "."
+      #  fact3 = "The loaction with the most UFO sightings in " + str(Year) + " was " + MostCommonLoc + "." 
+        return render_template('page2.html', Type_options=shapes, FunFact=fact)
+    #shape = most_common_shape(Year)
+    #fact2 = "In " + Year + ", the most common type of ufo was " + shape + "."
+    return render_template('page2.html', Type_options=shapes)
+    
+def Shapelongest_encounter(Shape):   
+    with open('ufo_sightings.json') as enounter_data:
+        Times = json.load(enounter_data)
+    times = []
+    for t in Times:
+       # print(t["Dates"]["Sighted"]["Year"])
+        if t["Data"]["Shape"] == (Shape):
+            print("test")
+       # if t["Dates"]["Sighted"]["Year"] == Year:
+       #     print("tets")
+            times.append(t["Data"]["Encounter duration"])
+    longest = max(times)
+    print(longest)
+    return longest
+    
+def get_shape_options():
+    with open('ufo_sightings.json') as ufo_data:
+        Shapes = json.load(ufo_data)
+    shapes=[]
+    for s in Shapes:
+        if s["Data"]["Shape"] not in shapes:
+            shapes.append(str(s["Data"]["Shape"]))
+    print(shapes)
+    shapes = list(dict.fromkeys(shapes))
+    print(shapes)
+    #years = sorted(years)
+    shapeOptions=""
+    for y in shapes:
+        shapeOptions += Markup("<option value=\"" + y + "\">" + y + "</option>") #Use Markup so <, >, " are not escaped lt, gt, etc.
+    return shapeOptions
     
 @app.route("/p3")
 def render_page3():
-    return render_template('page3.html')
+    EncLength = GetEncLength()
+    return render_template('page3.html', data=EncLength)
+    
+def GetEncLength():
+    with open('ufo_sightings.json') as Ufo_data:
+        UfoData = json.load(Ufo_data)
+    Encounterdata = "["
+    for e in UfoData:
+        if e["Data"]["Encounter duration"] < 20000000:
+            Encounterdata = Encounterdata + Markup("{x:" + str(e["Dates"]["Sighted"]["Year"]) + ",y:" + str(e["Data"]["Encounter duration"]) + "},")
+    Encounterdata = Encounterdata[:-1]+"]"
+    return Encounterdata 
     
 @app.route('/p1')
 def render_fact():
@@ -94,7 +148,6 @@ def GetMostCommonLoc(Year):
     return MostCommonCity + " " + MostCommonState
 if __name__=="__main__":
     app.run(debug=True)
-
 
 def is_localhost():
     """ Determines if app is running on localhost or not

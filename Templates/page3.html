@@ -6,5 +6,54 @@
 
 {% block content %}
     <!--page content-->
-    <h1>Encounter Duration vs Year</h1>
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+window.onload = function() {
+
+var dataPoints = [];
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Encounter Duration vs Year"
+	},
+	axisY: {
+		title: "Encounter Duration (seconds)",
+		titleFontSize: 15,
+		includeZero: true,
+		minimum: 0,
+		maximum: 11000000
+	},
+	axisX: {
+		title: "Year",
+		titleFontSize: 24,
+		includeZero: true, 
+		valueFormatString: "####"
+	},
+	data: [{
+		type: "column",
+		yValueFormatString: "####",
+		xValueFormatString: "####",
+		dataPoints: {{data}}
+	}]
+});
+
+	chart.render();
+
+}
+
+
+
+</script>
+</head>
+<meta charset="utf-8">
+<body>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</body>
+</html>
 {% endblock %}
