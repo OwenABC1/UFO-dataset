@@ -68,12 +68,32 @@ def render_page3():
 def GetEncLength():
     with open('ufo_sightings.json') as Ufo_data:
         UfoData = json.load(Ufo_data)
+    Years = []
+    for u in UfoData:
+        if u["Dates"]["Sighted"]["Year"] not in Years:
+            Years.append(u["Dates"]["Sighted"]["Year"])
+    Years = sorted(Years)
     Encounterdata = "["
+    data = {}
     for e in UfoData:
-        if e["Data"]["Encounter duration"] < 20000000:
-            Encounterdata = Encounterdata + Markup("{x:" + str(e["Dates"]["Sighted"]["Year"]) + ",y:" + str(e["Data"]["Encounter duration"]) + "},")
-    Encounterdata = Encounterdata[:-1]+"]"
-    return Encounterdata 
+        if e["Data"]["Encounter duration"] < 20000000: #removing outliers 
+           data[e["Dates"]["Sighted"]["Year"]] = e["Data"]["Encounter duration"]
+    maxdata =  {}
+    for y in Years:
+        durations = []
+        for Key,x in data.items():
+            if Key == y:
+                durations.append(x)
+        MaxDur = max(durations)
+        maxdata[y] = MaxDur
+    
+    
+    #Encounterdata = Encounterdata + Markup("{x:" + str(e["Dates"]["Sighted"]["Year"]) + ",y:" + str(e["Data"]["Encounter duration"]) + "},")
+   # Encounterdata = Encounterdata[:-1]+"]"
+    ReturnData = ""
+    for Key,Value in maxdata.items():
+        ReturnData = ReturnData + Markup("{x:" + str(Key) + ",y:" + str(Value) + "},")
+    return ReturnData
     
 @app.route('/p1')
 def render_fact():

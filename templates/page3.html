@@ -25,7 +25,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		titleFontSize: 15,
 		includeZero: true,
 		minimum: 0,
-		maximum: 11000000
+		maximum: 5000
 	},
 	axisX: {
 		title: "Year",
@@ -37,7 +37,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		type: "column",
 		yValueFormatString: "####",
 		xValueFormatString: "####",
-		dataPoints: {{data}}
+		dataPoints: [{{data}}]
 	}]
 });
 
